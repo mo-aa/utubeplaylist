@@ -1,0 +1,13 @@
+services:
+  - type: worker
+    name: telegram-playlist-bot
+    runtime: docker
+    plan: starter
+    dockerContext: .
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: DOWNLOADS_DIR
+        value: downloads
+      - key: TELEGRAM_MAX_UPLOAD_MB
+        value: 49
