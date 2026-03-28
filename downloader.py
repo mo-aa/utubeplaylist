@@ -80,7 +80,12 @@ class PlaylistDownloader:
         if mode == "video":
             return {
                 **common,
-                "format": "bestvideo[height<=360]+bestaudio/best[height<=360]/best",
+                "format": (
+                    "bestvideo[height<=360]+bestaudio/"
+                    "best[height<=360]/"
+                    "bestvideo+bestaudio/"
+                    "best"
+                ),
                 "merge_output_format": "mp4",
             }
 
