@@ -20,8 +20,9 @@ class DownloadedFile:
 
 
 class PlaylistDownloader:
-    def __init__(self, base_dir: Path) -> None:
+    def __init__(self, base_dir: Path, cookies_path: Path | None = None) -> None:
         self.base_dir = base_dir
+        self.cookies_path = cookies_path
         self.base_dir.mkdir(parents=True, exist_ok=True)
 
     def download_playlist(self, playlist_url: str, mode: str, chat_id: int) -> list[DownloadedFile]:
@@ -59,6 +60,9 @@ class PlaylistDownloader:
             "restrictfilenames": True,
             "windowsfilenames": True,
         }
+
+        if self.cookies_path is not None:
+            common["cookiefile"] = str(self.cookies_path)
 
         if mode == "audio":
             return {

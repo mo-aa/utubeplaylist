@@ -42,6 +42,9 @@ Then edit `.env` and set:
 TELEGRAM_BOT_TOKEN=your_real_bot_token
 DOWNLOADS_DIR=downloads
 TELEGRAM_MAX_UPLOAD_MB=49
+YTDLP_COOKIES_FILE=
+YTDLP_COOKIES=
+YTDLP_COOKIES_B64=
 ```
 
 ## Run
@@ -112,6 +115,21 @@ Render background workers are not available on the free plan, so expect to use a
 - Telegram upload limits still apply, so very large files may be skipped
 - Private, region-locked, or unavailable videos may fail or be skipped by `yt-dlp`
 - Large playlists can take a while to process
+- Cloud hosts may hit YouTube's "Sign in to confirm you're not a bot" challenge. When that happens, configure one of:
+- `YTDLP_COOKIES_FILE`: path to a Netscape-format cookies file available on disk
+- `YTDLP_COOKIES`: raw Netscape-format cookies text
+- `YTDLP_COOKIES_B64`: base64-encoded Netscape-format cookies text, usually the easiest option for Railway
+
+## YouTube Cookies On Railway
+
+If Railway is showing `Sign in to confirm you're not a bot`, add YouTube cookies to the service variables.
+
+1. Export your YouTube cookies in Netscape format
+2. Base64-encode that cookies file
+3. In Railway Variables, set `YTDLP_COOKIES_B64` to that encoded value
+4. Redeploy the service
+
+This is often more reliable than trying to download anonymously from a cloud IP.
 
 ## Project files
 

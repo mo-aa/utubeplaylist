@@ -120,7 +120,8 @@ async def handle_playlist_url(update: Update, context: ContextTypes.DEFAULT_TYPE
     except DownloadError as exc:
         await asyncio.to_thread(downloader.cleanup_chat_downloads, chat.id)
         await status_message.edit_text(
-            "Download failed. Check that the playlist is public and that `ffmpeg` is installed for audio mode.\n\n"
+            "Download failed. Check that the playlist is public, that `ffmpeg` is installed for audio mode, "
+            "and that YouTube cookies are configured if YouTube asks to confirm you're not a bot.\n\n"
             f"Details: {exc}"
         )
         return
@@ -175,7 +176,7 @@ async def fallback_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -
 
 def build_application() -> Application:
     settings = load_settings()
-    downloader = PlaylistDownloader(settings.downloads_dir)
+    downloader = PlaylistDownloader(settings.downloads_dir, settings.yt_dlp_cookies_path)
 
     application = Application.builder().token(settings.telegram_bot_token).build()
     application.bot_data["downloader"] = downloader
