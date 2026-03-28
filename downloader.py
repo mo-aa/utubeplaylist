@@ -67,7 +67,7 @@ class PlaylistDownloader:
         if mode == "audio":
             return {
                 **common,
-                "format": "bestaudio/best",
+                "format": "bestaudio*/bestaudio/best",
                 "postprocessors": [
                     {
                         "key": "FFmpegExtractAudio",
